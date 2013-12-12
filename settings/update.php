@@ -1,5 +1,5 @@
 <?php
-include_once("connect-database.php");
+include_once("config.php");
 
 
 $MATCHING_IP = "131.174.39.172";

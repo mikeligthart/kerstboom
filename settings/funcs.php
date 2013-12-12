@@ -43,6 +43,7 @@ function waitingTime($items){
 	return array("minutes" => $minutes, "seconds" => $seconds);
 }
 
+//detect if browser is IE
 function ae_detect_ie()
 {
     if (isset($_SERVER['HTTP_USER_AGENT']) && 
