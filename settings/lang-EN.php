@@ -13,6 +13,7 @@ $lang = array_merge($lang,array(
 "MAIN_CHRISTMAS_ATMOSPHERE"	=> "For a Christmas feeling: activate the lights in the Christmas tree below!",
 "MAIN_LEAVE_MESSAGE"		=> "You can also leave a message for a fellow student, colleague, teacher or someone else.",
 "MAIN_TREE_CAM"				=> "Tree cam",
+"MAIN_LEAVE_MESSAGE_HERE"	=> "Leave your message here or activate the tree directly:",
 ));
 
 
@@ -22,13 +23,14 @@ $lang = array_merge($lang,array(
 "MESSAGE_INPUT_TO"	=> "For",
 "MESSAGE_INPUT_MESSAGE"	=> "Message",
 "MESSAGE_SUBMIT_VALUE" 	=> "Activate the tree!",
+"MESSAGE_OPTIONAL"		=> "(optioneel)",
 ));
 
 //Notification after a message is posted
 $lang = array_merge($lang, array(
-"NOTIFICATION_THANK_YOU" 				=> "Thanks for your message!",
+"NOTIFICATION_THANK_YOU" 				=> "Thanks for your contribution!",
 "NOTIFICATION_AT_THE_MOMENT" 			=> "At the moment there are",
-"NOTIFICATION_WAITING"					=> "messages waiting to see the light before yours.",
+"NOTIFICATION_WAITING"					=> "people waiting to see the light.",
 "NOTIFICATION_EXPECTED_WAITING_TIME" 	=> "The expected waiting time is:",
 "NOTIFICATION_MINUTES"					=> "minutes",
 "NOTIFICATION_AND"						=> "and",

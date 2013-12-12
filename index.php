@@ -1,17 +1,6 @@
 <?php
+//Loading necessary files & functions
 require_once("settings/config.php");
-
-//Set language
-if(isset($_GET["lang"]) && $_GET["lang"] == "EN")
-{
-	require_once("settings/lang-EN.php");
-	setlocale(LC_ALL, 'en_EN.UTF-8');
-}
-else
-{
-	require_once("settings/lang-NL.php");
-	setlocale(LC_ALL, 'nl_NL.UTF-8');
-}
 
 //Insert new message in database
 if(isset($_POST["submit"]))
@@ -26,34 +15,13 @@ if(isset($_POST["submit"]))
 	$stmt->close();
 }
 
-//HTML of page
+//Start of HTML of page
 echo"
 <html>
 	<head><title>".lang('INDEX_TITLE')."</title>
 	<link rel='stylesheet' type='text/css' href='http://www2.ru.nl/iprox/css/2008/default.css' />
 	<link rel='stylesheet' type='text/css' href='http://www2.ru.nl/iprox/css/2008/run.css' />
-	<style>
-		#responceEntry
-		{
-		margin-bottom:10px;
-		}
-		
-		#responceHistory
-		{
-		background-color:#F0F0F0;
-		}
-		
-		#notificationOfSendMessage
-		{
-		color:#680000;
-		}
-		
-		#inputButton
-		{
-		padding-left: 100px;
-		}
-		
-	</style>
+	<link rel='stylesheet' type='text/css' href='local.css'/>
 	</head>
 	<body>
 	<h1>".lang('MAIN_RADBOUD_WISH')."</h1>
@@ -61,13 +29,13 @@ echo"
 
 	<h2>".lang('MAIN_CHRISTMAS_ATMOSPHERE')."</h2>
 
-	<h3>".lang('MAIN_LEAVE_MESSAGE')."</h3>
+	<h3>".lang('MAIN_LEAVE_MESSAGE')."</h3>";
 
 	
-	<br />
+	//Tree cam: display active responce
+	echo "<br />
 	<h2>".lang('MAIN_TREE_CAM')."</h2>
-	
-	<div id='responceActive'>";
+		<div id='responceActive'>";
 	$active = getActiveResponce();
 	if (empty($active)){
 		echo "<p><b>".lang('RESPONCE_TREE_OFF')."</b></p>";
@@ -92,42 +60,46 @@ echo"
 			echo " ".lang('RESPONCE_MESSAGE').": &quot;".$active['content']."&quot;.";
 		}
 		echo "</b></p>";
-}
-echo "</div>
+	}
 
-	<iframe src='boomcam.php' height='420px' width='620px' frameborder='0' scrolling = '0'></iframe>
+	//Tree cam: embedded with iframe
+	echo "</div>
+		<iframe src='boomcam.php' height='420px' width='620px' frameborder='0' scrolling = '0'></iframe>
+		<br />
+		<br />";
+
+	//Input form
+	echo "
+	<h3>".lang('MAIN_LEAVE_MESSAGE_HERE')."</h3>
+	<br />	
+	<form name='message' action='index.php' method='post'>
+	<p>
+	<label>".lang('MESSAGE_INPUT_FROM')."</label>
 	<br />
+	<input type='text' name='from' /> ".lang('MESSAGE_OPTIONAL')."
+	</p>
+	<p>
+	<label>".lang('MESSAGE_INPUT_TO')."</label>
 	<br />
+	<input type='text' name='to' /> ".lang('MESSAGE_OPTIONAL')."
+	</p>
+	<p>
+	<label>".lang('MESSAGE_INPUT_MESSAGE')."</label>
+	<br />
+	<textarea rows='2' cols='50' name='content'></textarea> ".lang('MESSAGE_OPTIONAL')."
+	</p>";
+	if (count(getQueue()) == 1)
+	{
+	 echo lang('NOTIFICATION_AT_THE_MOMENT_ONE')." ".count(getQueue())." ".lang('NOTIFICATION_WAITING_ONE');
+	}
+	elseif (count(getQueue()) > 1){
+	 echo lang('NOTIFICATION_AT_THE_MOMENT')." ".count(getQueue())." ".lang('NOTIFICATION_WAITING');
+	}
+	echo "
+	<p>
+	<label>&nbsp;</label>";
 
-<h3>Laat hier je boodschap achter of zet gelijk de boom aan:</h3>
-<br />	
-<form name='message' action='index.php' method='post'>
-<p>
-<label>".lang('MESSAGE_INPUT_FROM')."</label>
-<br />
-<input type='text' name='from' /> (optioneel)
-</p>
-<p>
-<label>".lang('MESSAGE_INPUT_TO')."</label>
-<br />
-<input type='text' name='to' /> (optioneel)
-</p>
-<p>
-<label>".lang('MESSAGE_INPUT_MESSAGE')."</label>
-<br />
-<textarea rows='2' cols='50' name='content'></textarea> (optioneel)
-</p>";
-if (count(getQueue()) == 1)
-{
- echo "Op dit momenten staat er ".count(getQueue())." bericht in de wachtrij.";
-}
-elseif (count(getQueue()) > 1){
- echo "Op dit momenten staan er ".count(getQueue())." berichten in de wachtrij.";
-}
-echo "
-<p>
-<label>&nbsp;</label>";
-
+//Form: submit button
 //if(ae_detect_ie())
 //{
 	echo "<input type='submit' value='".lang('MESSAGE_SUBMIT_VALUE')."' name='submit' />";
@@ -141,7 +113,7 @@ echo"
 </p>
 </form>";
 
-//Show notication of sent message
+//Form: show notication of sent message
 if(isset($_POST["submit"])){
 	echo "<br /><div id='notificationOfSendMessage'>".lang('NOTIFICATION_THANK_YOU');
 	$queue = getQueue();
@@ -162,13 +134,8 @@ if(isset($_POST["submit"])){
 	echo "</div>";
 }
 
-// DISPLAY RESPONCES
-echo "<br/></br><div id='responceField'>";
-
-//Display active responce
-
-
 //Display responce history
+echo "<br/></br><div id='responceField'>";
 $rows = getProcessedContent();
 echo "<div id='responceHistory'><h2>Berichtengeschiedenis (".count($rows).")</h2>";
 foreach ($rows as $row)
@@ -192,12 +159,10 @@ foreach ($rows as $row)
 	echo "</div>";
 }
 
-
+//End of HTML
 echo"
 </div>
 </div>
 </body>
 </html>";
-
-
 ?>
