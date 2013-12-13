@@ -14,6 +14,7 @@ $lang = array_merge($lang,array(
 "MAIN_LEAVE_MESSAGE"		=> "Je kunt ook een kerstboodschap achterlaten voor een medestudent, collega, docent of iemand anders.",
 "MAIN_TREE_CAM"				=> "Boomcam",
 "MAIN_LEAVE_MESSAGE_HERE"	=> "Laat hier je boodschap achter of zet gelijk de boom aan:",
+"MAIN_VPN" 					=> "Helaas is de boomcam alleen zichtbaar vanaf de campus. <br/> Wil je toch graag de boom zien? Zet dan je <a href='http://www.ru.nl/ictservicecentrum/@814193/pagina/' target='_blank' >VPN</a> verbinding aan.",
 ));
 
 //Form
@@ -22,7 +23,8 @@ $lang = array_merge($lang,array(
 "MESSAGE_INPUT_TO"		=> "Voor",
 "MESSAGE_INPUT_MESSAGE"	=> "Bericht",
 "MESSAGE_SUBMIT_VALUE" 	=> "Zet de boom aan!",
-"MESSAGE_OPTIONAL"		=> "(optioneel)",
+"MESSAGE_OPTIONAL_NAME"		=> "(optioneel, max. 50 tekens)",
+"MESSAGE_OPTIONAL_MESSAGE"		=> "(optioneel, max. 140 tekens)",
 ));
 
 //Notification after a message is posted
@@ -36,6 +38,8 @@ $lang = array_merge($lang, array(
 "NOTIFICATION_MINUTES"					=> "minuten",
 "NOTIFICATION_AND"						=> "en",
 "NOTIFICATION_SECONDS" 					=> "seconden",
+"NOTIFICATION_TOO_LONG"					=> "Helaas kunnen we niet aan je verzoek voldoen. De naam (max. 50 tekens) en/of het bericht (max 140 tekens) is te lang.",
+"NOTIFICATION_TOO_OFTEN"				=> "Een moment geduld alsjeblieft. Probeer het over enkele ongenblikken nog eens.",
 ));
 
 //Responces
@@ -48,4 +52,9 @@ $lang = array_merge($lang, array(
 "RESPONCE_ANONYMOUS"     	=> "Anoniem",
 "RESPONCE_FOR"				=> "voor",
 "RESPONCE_MESSAGE"			=> "met de volgende boodschap",
+"RESPONCE_ONN"				=> "aan",
+"RESPONCE_OFF"				=> "uit",
+"RESPONCE_SHOW_ANON"		=> "zet anoniemfilter",
+"RESPONCE_SHOW_BIG" 		=> "toon alles",
+"RESPONCE_SHOW_SMALL"		=> "toon samenvatting",
 ));

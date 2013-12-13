@@ -1,5 +1,5 @@
 <?php
-include_once("config.php");
+include_once("database-funcs.php");
 
 $data = getFirstInLine();
 $file = fopen("data.txt", 'w') or die("can't open file");

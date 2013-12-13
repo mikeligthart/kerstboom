@@ -52,4 +52,61 @@ function ae_detect_ie()
     else
         return false;
 }
+
+//long with anon -> do nothing
+//long without anon -> filter aanon
+//short with anon -> slice
+//short without anon -> filter anon & slice
+
+function filterAnon($var){
+	return (!empty($var['from']));
+}
+
+
+function longWithoutAnon($rows){
+	$result = array_filter($rows,"filterAnon");
+	return $result;
+}
+
+function shortWithanon($rows, $size){
+	$result = array_slice($rows, 0, $size);
+	return $result;
+}
+
+function shortWithoutAnon($rows, $size){
+	$result = array_filter($rows,"filterAnon");
+	$result = array_slice($result, 0, $size);
+	return $result;
+}
+
+function inputNameChecker($name){
+	if (strlen($name) > 50){
+		return false;
+	}
+	else {
+		return true;
+	}	
+}
+
+function inputMessageChecker($message){
+	if (strlen($message) > 140){
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+
+function isIPFromCampus(){
+	$compareA = substr($_SERVER['REMOTE_ADDR'], 0, 7);
+	$compareB = "131.174";
+
+	if (strcmp($compareA, $compareB) == 0) {
+	 return true;
+	}
+	else {
+	 return false;
+	}
+}
+
 ?>

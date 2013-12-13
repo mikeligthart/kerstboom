@@ -40,19 +40,19 @@ return $rows;
 function getActiveResponce()
 {
 		GLOBAL $mysqli;
-		if ($stmt = $mysqli->prepare("SELECT `id`, `from`, `to`, `content` FROM queue WHERE status=2")) {
+		if ($stmt = $mysqli->prepare("SELECT `from`, `to`, `content` FROM queue WHERE status=2")) {
 		
 		    /* execute query */
 		    $stmt->execute();
 		
 		    /* bind result variables */
-		    $stmt->bind_result($id, $from, $to, $content);
+		    $stmt->bind_result($from, $to, $content);
 		    $stmt->fetch();
 		
 		    /* close statement */
 		    $stmt->close();
 			
-			if(empty($id)){
+			if(empty($from) && empty($to) && empty($content)){
 				return "";
 			}
 			else{
@@ -121,3 +121,6 @@ function updateStatus($id, $status){
 	$stmt->close();
 }
 ?>
+
+
+
