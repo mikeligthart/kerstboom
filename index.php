@@ -7,9 +7,9 @@ session_start();
 //Insert new message in database
 if(isset($_POST["submit"]))
 {
-	$from = $_POST["from"];
-	$to = $_POST["to"];
-	$content = $_POST["content"];
+	$from = inputFilter($_POST["from"]);
+	$to = inputFilter($_POST["to"]);
+	$content = inputFilter($_POST["content"]);
 	
 	if(inputNameChecker($from) && inputNameChecker($to) && inputMessageChecker($content) && !(isset($_SESSION['last_submit']) && time()-$_SESSION['last_submit'] < 60)){
 		$stmt = $mysqli->prepare("INSERT INTO `queue` (`timestamp`, `timer`, `from`, `to`, `content`) VALUES (?, ?, ?, ?, ?)");
@@ -27,6 +27,7 @@ echo"
 	<link rel='stylesheet' type='text/css' href='http://www2.ru.nl/iprox/css/2008/default.css' />
 	<link rel='stylesheet' type='text/css' href='http://www2.ru.nl/iprox/css/2008/run.css' />
 	<link rel='stylesheet' type='text/css' href='local.css'/>
+	<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'></script>
 	</head>
 	<body>
 	<h1>".lang('MAIN_RADBOUD_WISH')."</h1>
@@ -38,22 +39,26 @@ echo"
 
 	
 	//Tree cam: display active responce
-	echo "<br />
-	<h2>".lang('MAIN_TREE_CAM')."</h2>
-		<div id='responceActive'>
-		<iframe src='active-entry.php' height='42px' width='600px' frameborder='0' scrolling='0'></iframe>";
-	//Tree cam: embedded with iframe
-	echo "</div>";
 	
-	if (isIPFromCampus()){
+	echo "<br />
+	<script>
+		function show_data(){
+			$('.responceActive').load('active-entry2.php');
+		}
+		setInterval('show_data()', 1000);
+	</script>
+	<h2>".lang('MAIN_TREE_CAM')."</h2>
+		<div class='responceActive'></div>";
+	
+	//if (isIPFromCampus()){
 	echo"
-		<iframe src='boomcam.php' height='420px' width='620px' frameborder='0' scrolling = '0'></iframe>
+		<iframe src='boomcam_via_www2.php' height='420px' width='620px' frameborder='0' scrolling = '0'></iframe>
 		<br />
 		<br />";
-	}
-	else{
-		echo lang('MAIN_VPN');
-	}
+	//}
+	//else{
+		//echo lang('MAIN_VPN');
+	//}
 
 
 	//Input form

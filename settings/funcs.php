@@ -109,4 +109,10 @@ function isIPFromCampus(){
 	}
 }
 
+function inputFilter($input){
+$output = filter_var($input, FILTER_SANITIZE_STRING);
+return $output;
+
+}
+
 ?>
