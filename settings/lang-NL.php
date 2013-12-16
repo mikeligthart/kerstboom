@@ -15,6 +15,7 @@ $lang = array_merge($lang,array(
 "MAIN_TREE_CAM"				=> "Boomcam",
 "MAIN_LEAVE_MESSAGE_HERE"	=> "Laat hier je boodschap achter of zet gelijk de boom aan:",
 "MAIN_VPN" 					=> "Helaas is de boomcam alleen zichtbaar vanaf de campus. <br/> Wil je toch graag de boom zien? Zet dan je <a href='http://www.ru.nl/ictservicecentrum/@814193/pagina/' target='_blank' >VPN</a> verbinding aan.",
+"MAIN_MESSAGE_HISTORY"		=> "Berichtengeschiedenis",
 ));
 
 //Form
@@ -33,7 +34,7 @@ $lang = array_merge($lang, array(
 "NOTIFICATION_AT_THE_MOMENT" 			=> "Op dit staan er",
 "NOTIFICATION_WAITING"					=> "mensen in de rij die het licht willen zien",
 "NOTIFICATION_AT_THE_MOMENT_ONE" 		=> "Op dit staat er",
-"NOTIFICATION_WAITING_ONE"				=> "iemand in de rij die het licht willen zien",
+"NOTIFICATION_WAITING_ONE"				=> "iemand in de rij die het licht wil zien",
 "NOTIFICATION_EXPECTED_WAITING_TIME" 	=> "De verwachte wachttijd is:",
 "NOTIFICATION_MINUTES"					=> "minuten",
 "NOTIFICATION_AND"						=> "en",

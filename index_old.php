@@ -2,7 +2,7 @@
 //Loading necessary files & functions
 require_once("settings/config.php");
 
-session_start(); //Starting a session to prevent people from activating the tree several times in a minute
+session_start();
 
 //Insert new message in database
 if(isset($_POST["submit"]))
@@ -12,7 +12,10 @@ if(isset($_POST["submit"]))
 	$content = inputFilter($_POST["content"]);
 	
 	if(inputNameChecker($from) && inputNameChecker($to) && inputMessageChecker($content) && !(isset($_SESSION['last_submit']) && time()-$_SESSION['last_submit'] < 60)){
-		insertNewEntry($TIMER_TIME,$from,$to,$content);
+		$stmt = $mysqli->prepare("INSERT INTO `queue` (`timestamp`, `timer`, `from`, `to`, `content`) VALUES (?, ?, ?, ?, ?)");
+		$stmt->bind_param("iisss", time(), $TIMER_TIME ,$from, $to, $content);
+		$stmt->execute();
+		$stmt->close();
 		$_SESSION['last_submit'] = time();
 	}
 }
@@ -25,12 +28,6 @@ echo"
 	<link rel='stylesheet' type='text/css' href='http://www2.ru.nl/iprox/css/2008/run.css' />
 	<link rel='stylesheet' type='text/css' href='local.css'/>
 	<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'></script>
-	<script>
-		function show_data(){
-			$('.responceActive').load('".$ACTIVE_ENTRY_URL."');
-		}
-		setInterval('show_data()', 1000);
-	</script>
 	</head>
 	<body>
 	<h1>".lang('MAIN_RADBOUD_WISH')."</h1>
@@ -42,35 +39,47 @@ echo"
 
 	
 	//Tree cam: display active responce
+	
 	echo "<br />
+	<script>
+		function show_data(){
+			$('.responceActive').load('active-entry2.php');
+		}
+		setInterval('show_data()', 1000);
+	</script>
 	<h2>".lang('MAIN_TREE_CAM')."</h2>
 		<div class='responceActive'></div>";
 	
-	//Tree cam: load tree cam in iframe
+	//if (isIPFromCampus()){
 	echo"
-	<iframe src='boomcam_via_www2.php' height='420px' width='620px' frameborder='0' scrolling = '0'></iframe>
-	<br />
-	<br />";
+		<iframe src='boomcam_via_www2.php' height='420px' width='620px' frameborder='0' scrolling = '0'></iframe>
+		<br />
+		<br />";
+	//}
+	//else{
+		//echo lang('MAIN_VPN');
+	//}
+
 
 	//Input form
 	echo "
 	<h3>".lang('MAIN_LEAVE_MESSAGE_HERE')."</h3>
 	<br />	
-<form name='message' action='".$_SERVER["REQUEST_URI"]."' method='post'>
+	<form name='message' action='index.php' method='post'>
 	<p>
-		<label>".lang('MESSAGE_INPUT_FROM')."</label>
-		<br />
-		<input type='text' name='from' /> ".lang('MESSAGE_OPTIONAL_NAME')."
+	<label>".lang('MESSAGE_INPUT_FROM')."</label>
+	<br />
+	<input type='text' name='from' /> ".lang('MESSAGE_OPTIONAL_NAME')."
 	</p>
 	<p>
-		<label>".lang('MESSAGE_INPUT_TO')."</label>
-		<br />
-		<input type='text' name='to' /> ".lang('MESSAGE_OPTIONAL_NAME')."
+	<label>".lang('MESSAGE_INPUT_TO')."</label>
+	<br />
+	<input type='text' name='to' /> ".lang('MESSAGE_OPTIONAL_NAME')."
 	</p>
 	<p>
-		<label>".lang('MESSAGE_INPUT_MESSAGE')."</label>
-		<br />
-		<textarea rows='2' cols='50' name='content'></textarea> ".lang('MESSAGE_OPTIONAL_MESSAGE')."
+	<label>".lang('MESSAGE_INPUT_MESSAGE')."</label>
+	<br />
+	<textarea rows='2' cols='50' name='content'></textarea> ".lang('MESSAGE_OPTIONAL_MESSAGE')."
 	</p>";
 	if (count(getQueue()) == 1)
 	{
@@ -81,9 +90,20 @@ echo"
 	}
 	echo "
 	<p>
-		<label>&nbsp;</label>
-		<input type='submit' value='".lang('MESSAGE_SUBMIT_VALUE')."' name='submit' />
-	</p>
+	<label>&nbsp;</label>";
+
+//Form: submit button
+//if(ae_detect_ie())
+//{
+	echo "<input type='submit' value='".lang('MESSAGE_SUBMIT_VALUE')."' name='submit' />";
+//}
+//else
+//{
+	//echo "<div id='inputButton'><input type='image' src='images/boombanner.jpg' height='200px' width='400px' onclick='this.form.submit();' value='".lang('MESSAGE_SUBMIT_VALUE')."' name='submit' /></div>";
+//}
+
+echo"
+</p>
 </form>";
 
 //Form: show notication of sent message
@@ -118,70 +138,34 @@ if(isset($_POST["submit"])){
 //Display responce history
 echo "<br/></br><div id='responceField'>";
 $rows = getProcessedContent();
-echo "<div id='responceHistory'><h2>".lang('MAIN_MESSAGE_HISTORY')."(".count($rows).")</h2>";
+echo "<div id='responceHistory'><h2>Berichtengeschiedenis (".count($rows).")</h2>";
 
-//Create filters
 if (isset($_GET['hisShowAnon']) && $_GET['hisShowAnon'] == "on"){
 	if (!(isset($_GET['hisSize']) && $_GET['hisSize'] = "big")){
 		$rows = shortWithanon($rows, 15);
-		$link1 = "index.php";
-		$link2 = "index.php?hisShowAnon=on&hisSize=big";
-		
-		if($LANGUAGE == "EN")
-		{
-			$link1 = $link1."?lang=EN";
-			$link2 = $link2."&lang=EN";
-		}
-		echo "<a href='".$link1."'>".lang('RESPONCE_SHOW_ANON')." ".lang("RESPONCE_ONN")."</a>";
-		echo "	|	<a href='".$link2."'>".lang('RESPONCE_SHOW_BIG')."</a>";
+		echo "<a href='index.php'>".lang('RESPONCE_SHOW_ANON')." ".lang("RESPONCE_ONN")."</a>";
+		echo "	|	<a href='index.php?hisShowAnon=on&hisSize=big'>".lang('RESPONCE_SHOW_BIG')."</a>";
 	}
 	else{
-		$link1 = "index.php?hisSize=big";
-		$link2 = "index.php?hisShowAnon=on";
-		
-		if($LANGUAGE == "EN")
-		{
-			$link1 = $link1."&lang=EN";
-			$link2 = $link2."&lang=EN";
-		}
-		echo "<a href='".$link1."'>".lang('RESPONCE_SHOW_ANON')." ".lang("RESPONCE_ONN")."</a>";
-		echo "	|	<a href='".$link2."'>".lang('RESPONCE_SHOW_SMALL')."</a>";
+		echo "<a href='index.php?hisSize=big'>".lang('RESPONCE_SHOW_ANON')." ".lang("RESPONCE_ONN")."</a>";
+		echo "	|	<a href='index.php?hisShowAnon=on'>".lang('RESPONCE_SHOW_SMALL')."</a>";
 	}
 }
 else{
 	if (!(isset($_GET['hisSize']) && $_GET['hisSize'] = "big")){
 		$rows = shortWithoutAnon($rows, 15);
-		
-		$link1 = "index.php?hisShowAnon=on";
-		$link2 = "index.php?hisSize=big";
-		
-		if($LANGUAGE == "EN")
-		{
-			$link1 = $link1."&lang=EN";
-			$link2 = $link2."&lang=EN";
-		}
-		echo "<a href='".$link1."'>".lang('RESPONCE_SHOW_ANON')." ".lang("RESPONCE_OFF")."</a>";
-		echo "	|	<a href='".$link2."'>".lang('RESPONCE_SHOW_BIG')."</a>";
+		echo "<a href='index.php?hisShowAnon=on'>".lang('RESPONCE_SHOW_ANON')." ".lang("RESPONCE_OFF")."</a>";
+		echo "	|	<a href='index.php?hisSize=big'>".lang('RESPONCE_SHOW_BIG')."</a>";
 	}
 	else{
 		$rows = longWithoutAnon($rows);
-		$link1 = "index.php?hisShowAnon=on&hisSize=big";
-		$link2 = "index.php";
-		
-		if($LANGUAGE == "EN")
-		{
-			$link1 = $link1."&lang=EN";
-			$link2 = $link2."?lang=EN";
-		}
-		
-		echo "<a href='".$link1."'>".lang('RESPONCE_SHOW_ANON')." ".lang("RESPONCE_OFF")."</a>";
-		echo "	|	<a href='".$link2."'>".lang('RESPONCE_SHOW_SMALL')."</a>";
+		echo "<a href='index.php?hisShowAnon=on&hisSize=big'>".lang('RESPONCE_SHOW_ANON')." ".lang("RESPONCE_OFF")."</a>";
+		echo "	|	<a href='index.php'>".lang('RESPONCE_SHOW_SMALL')."</a>";
 	}
 }
 
 echo "<br /><br />";
 
-//List filtered reactions
 foreach ($rows as $row)
 {
 		echo "<div id='responceEntry'>";

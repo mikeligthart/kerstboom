@@ -120,4 +120,13 @@ function updateStatus($id, $status){
 	$stmt->execute(); 
 	$stmt->close();
 }
+
+//insert new entry
+function insertNewEntry($timer_time, $from, $to, $content){
+		GLOBAL $mysqli;	
+		$stmt = $mysqli->prepare("INSERT INTO `queue` (`timestamp`, `timer`, `from`, `to`, `content`) VALUES (?, ?, ?, ?, ?)");
+		$stmt->bind_param("iisss", time(), $timer_time ,$from, $to, $content);
+		$stmt->execute();
+		$stmt->close();
+}
 ?>

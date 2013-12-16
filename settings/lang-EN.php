@@ -15,6 +15,7 @@ $lang = array_merge($lang,array(
 "MAIN_TREE_CAM"				=> "Tree cam",
 "MAIN_LEAVE_MESSAGE_HERE"	=> "Leave your message here or activate the tree directly:",
 "MAIN_VPN"					=> "Unfortunately the tree cam is only visible from the campus area. Connect to the campus network with a VPN to see the Christmass Tree",
+"MAIN_MESSAGE_HISTORY"		=> "Message history",
 ));
 
 
@@ -32,21 +33,21 @@ $lang = array_merge($lang,array(
 $lang = array_merge($lang, array(
 "NOTIFICATION_THANK_YOU" 				=> "Thanks for your contribution!",
 "NOTIFICATION_AT_THE_MOMENT" 			=> "At the moment there are",
-"NOTIFICATION_WAITING"					=> "people waiting to see the light.",
+"NOTIFICATION_WAITING"					=> "people waiting to see the lights.",
 "NOTIFICATION_AT_THE_MOMENT_ONE" 		=> "At the moment there is",
-"NOTIFICATION_WAITING_ONE"				=> "person waiting to see the light.",
+"NOTIFICATION_WAITING_ONE"				=> "person waiting to see the lights.",
 "NOTIFICATION_EXPECTED_WAITING_TIME" 	=> "The expected waiting time is:",
 "NOTIFICATION_MINUTES"					=> "minutes",
 "NOTIFICATION_AND"						=> "and",
 "NOTIFICATION_SECONDS" 					=> "seconds",
-"NOTIFICATION_TOO_LONG"					=> "Unfortunatly we can't handle your request. The name (max. 50 characters) and/or message (max. 140 characters) is to long.",
-"NOTIFICATION_TOO_OFTEN"				=> "Please wait a few moment before trying a new request",
+"NOTIFICATION_TOO_LONG"					=> "Unfortunatly we can't handle your request. The name (max. 50 characters) and/or message (max. 140 characters) is too long.",
+"NOTIFICATION_TOO_OFTEN"				=> "Please wait a few moment before trying again",
 ));
 
 
 //Responces
 $lang = array_merge($lang, array(
-"RESPONCE_TREE_OFF"				=> "The Christmas tree is now off. Are you activating the tree?",
+"RESPONCE_TREE_OFF"				=> "The Christmas tree is now turned off. Do you want to activate the tree?",
 "RESPONCE_TREE_NOW"				=> "The Christmas tree is now activated by",
 "RESPONCE_ON"                   => "On",
 "RESPONCE_AT"                   => "at",
