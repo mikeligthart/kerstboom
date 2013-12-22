@@ -16,6 +16,8 @@ $lang = array_merge($lang,array(
 "MAIN_LEAVE_MESSAGE_HERE"	=> "Laat hier je boodschap achter of zet gelijk de boom aan:",
 "MAIN_VPN" 					=> "Helaas is de boomcam alleen zichtbaar vanaf de campus. <br/> Wil je toch graag de boom zien? Zet dan je <a href='http://www.ru.nl/ictservicecentrum/@814193/pagina/' target='_blank' >VPN</a> verbinding aan.",
 "MAIN_MESSAGE_HISTORY"		=> "Berichtengeschiedenis",
+"MAIN_TREE_ON_HOLLIDAY"		=> "Bedankt voor het licht dat jullie allemaal over de campus hebben laten schijnen! De kerstboom viert nu zelf ook kerstvakantie",
+"MAIN_VIEW_MESSAGE"			=> "Bekijk hieronder hoe vaak en met welke boodschap de kerstboom is aangezet",
 ));
 
 //Form

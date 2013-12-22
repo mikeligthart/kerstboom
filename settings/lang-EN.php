@@ -16,6 +16,8 @@ $lang = array_merge($lang,array(
 "MAIN_LEAVE_MESSAGE_HERE"	=> "Leave your message here or activate the tree directly:",
 "MAIN_VPN"					=> "Unfortunately the tree cam is only visible from the campus area. Connect to the campus network with a VPN to see the Christmass Tree",
 "MAIN_MESSAGE_HISTORY"		=> "Message history",
+"MAIN_TREE_ON_HOLLIDAY"		=> "Thanks for the light that you all brought to the campus. The Christmas tree is having his own Christmas break",
+"MAIN_VIEW_MESSAGE"			=> "Below you can view how much the Christmas tree was activated and which message accompanied the activation",
 ));
 
 
