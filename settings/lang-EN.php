@@ -9,7 +9,7 @@ $lang = array_merge($lang,array(
 
 //Main text
 $lang = array_merge($lang,array(
-"MAIN_RADBOUD_WISH"			=> "The Radboud University wishes everyone happy hollidays!",
+"MAIN_RADBOUD_WISH"			=> "The Radboud University wishes everyone happy holidays!",
 "MAIN_CHRISTMAS_ATMOSPHERE"	=> "For a Christmas feeling: activate the lights in the Christmas tree below!",
 "MAIN_LEAVE_MESSAGE"		=> "You can also leave a message for a fellow student, colleague, teacher or someone else.",
 "MAIN_TREE_CAM"				=> "Tree cam",
